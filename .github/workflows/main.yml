@@ -1,4 +1,4 @@
-name: CI
+name: Docker Build and Push
 
 on:
   push:
@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: debug
-      run: |
-        pwd
-        ls -la
-        env
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_PASS }}
+        repository: marvell/allure-portal
+        tags: latest
